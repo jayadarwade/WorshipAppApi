@@ -1,0 +1,38 @@
+const mongoose = require("mongoose");
+const schema = mongoose.Schema;
+const priestSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique:true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  mobile: {
+    type: Number,
+    required: true
+  },
+  age: {
+    type: Number,
+    required: true
+  },
+  isApproved: {
+    type: boolean,
+    default : false
+  },
+  image : {
+    type : String,
+    required : true
+  },
+  priestCategory : {
+      type : schema.Types.ObjectId,
+      ref : "priestcategories"
+  }
+});
+module.exports = mongoose.model("priests", priestSchema);
