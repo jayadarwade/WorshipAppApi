@@ -8,7 +8,7 @@ const cartSchema = new mongoose.Schema({
   }],
   packageList: [{
     type: schema.Types.ObjectId,
-    ref: "products",
+    ref: "packages",
   }],
 });
 module.exports = mongoose.model("carts", cartSchema);
