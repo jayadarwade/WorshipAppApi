@@ -1,19 +1,27 @@
-const express= require('express');
+const express = require("express");
 const route = express.Router();
+const { Storage } = require("@google-cloud/storage");
 const multer = require("multer");
 const packageCategoryController = require("../controller/categoryPackageController");
-var storage = multer.diskStorage({
+const path = require("path");
+var storages = multer.diskStorage({
   destination: "public/images",
-  filename: function (req, file, cd) {
-    cd(null, Date.now() + "-" + file.originalname);
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
+var upload = multer({ storage: storages });
 
-var upload = multer({ storage: storage });
-route.post(
-  "/add",
-  upload.single("image"),
-  packageCategoryController.add
-);
+const storage = new Storage({
+  projectId: "worship-first",
+  keyFilename:
+    "../WorshipFirstBackEnd/worship-first-firebase-adminsdk-vcyhq-642e473ed6.json",
+});
+const bucketName = "gs://worship-first.appspot.com/";
+route.post("/add", upload.single("image"), packageCategoryController.add);
 
-module.exports=route;
+route.post("/update", upload.single("image"), packageCategoryController.update);
+
+route.get("/view", packageCategoryController.view);
+
+module.exports = route;
