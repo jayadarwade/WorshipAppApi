@@ -20,7 +20,7 @@ const storage = new Storage({
 const bucketName = "gs://worship-first.appspot.com/";
 route.post("/add", upload.single("image"), packageCategoryController.add);
 
-// route.post("/update", upload.single("image"), packageCategoryController.update);
+route.post("/update", upload.single("image"), packageCategoryController.update);
 
 route.get("/view", packageCategoryController.view);
 
