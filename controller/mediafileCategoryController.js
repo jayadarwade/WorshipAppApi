@@ -1,10 +1,12 @@
 const mediafile = require("../model/mediafileCategoryModel");
 exports.add = (request, response) => {
+  console.log(request.body)
   mediafile
     .create({
-      name: request.body.name,
+      name: request.body.name
     })
     .then((result) => {
+    
       console.log(result);
       return response.status(200).json(result);
     })
