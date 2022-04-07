@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const categorySchema = new mongoose.Schema({
   name: {
     type: String,
@@ -8,5 +9,10 @@ const categorySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  type : {
+    type : String,
+    required : true
+  }
 });
-module.exports = mongoose.model("prdouctcategories", categorySchema);
+
+module.exports = mongoose.model("categories", categorySchema);

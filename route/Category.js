@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {Storage} = require("@google-cloud/storage");
 const multer = require("multer");
-const productCategoryModel = require("../model/productCategoryModel");
+const productCategoryModel = require("../model/CategoryModel");
 const path = require("path");
 const requests = require("request");
 
@@ -22,7 +22,8 @@ const bucketName = "gs://worship-first.appspot.com/";
 router.post("/add",upload.single("image"),(request,response)=>{
     productCategoryModel.create({
         name : request.body.name,
-        image : "https://firebasestorage.googleapis.com/v0/b/worship-first.appspot.com/o/"+request.file.filename+"?alt=media&token=hello"
+        image : "https://firebasestorage.googleapis.com/v0/b/worship-first.appspot.com/o/"+request.file.filename+"?alt=media&token=hello",
+        type : request.body.type
     }).then(result=>{
         uploadFile(path.join(__dirname, "../", "public/images/") + request.file.filename);
         return response.status(201).json(result);
@@ -82,7 +83,8 @@ router.post("/edit",upload.single("image"),(request,response)=>{
     }
     productCategoryModel.updateOne({_id:request.body.id},{
         name:request.body.name,
-        image:image
+        image:image,
+        type : request.body.type
     })
     .then(result=>{
         return response.status(200).json(result);

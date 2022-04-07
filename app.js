@@ -2,8 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 app.use(cors());
-const productCategoryRoute = require("./route/productCategoryRoute");
-const packageCategoryRouter = require("./route/packageCategoryRoute")
+const productCategoryRoute = require("./route/Category");
 
 const mongoose = require("mongoose");
 mongoose.connect("mongodb+srv://mahak:root@cluster1.p5j5p.mongodb.net/worshipFirst?retryWrites=true&w=majority").then(()=>{
@@ -12,7 +11,6 @@ mongoose.connect("mongodb+srv://mahak:root@cluster1.p5j5p.mongodb.net/worshipFir
     console.log("Failed + " + err);
 });
 app.use(express.static("./public"));
-app.use('/packageCategory',packageCategoryRouter);
 app.use("/product-category",productCategoryRoute);
 
 app.listen(3000,()=>{

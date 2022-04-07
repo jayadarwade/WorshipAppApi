@@ -30,9 +30,13 @@ const priestSchema = new mongoose.Schema({
     type : String,
     required : true
   },
-  priestCategory : {
+  priestCategory : [{
       type : schema.Types.ObjectId,
       ref : "priestcategories"
+  }],
+  about : {
+    type : String,
   }
 });
+
 module.exports = mongoose.model("priests", priestSchema);

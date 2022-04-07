@@ -21,9 +21,13 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  productCategory:{
+  Category:{
     type: Schema.Types.ObjectId,
     ref: "productcategories"
+   },
+   keywords : {
+     type : String,
+     required  :true
    }
 });
 module.exports = mongoose.model("products", productSchema);
