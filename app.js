@@ -7,6 +7,7 @@ const productCategoryRoute = require("./route/Category");
 const mediafileCategoryRoute= require("./route/mediafileCategoryRoute");
 const mediafileRouter = require("./route/mediafile");
 const productRoute = require("./route/productRoute");
+const priestCategoryRoute = require("./route/priestCategoryRoute");
 
 const mongoose = require("mongoose");
 mongoose
@@ -27,7 +28,7 @@ app.use("/product-category", productCategoryRoute);
 app.use("/mediafile-category", mediafileCategoryRoute);
 app.use("/mediafile", mediafileRouter);
 app.use("/product",productRoute);
-app.use("/priest-category",priestController)
+app.use("/priest-category",priestCategoryRoute)
 app.listen(3000, () => {
   console.log("Server is running on port " + 3000);
 });
