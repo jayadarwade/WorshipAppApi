@@ -106,7 +106,19 @@ router.post("/edit",upload.single("image"),(request,response)=>{
     .catch((err) => {
       return response.status(500).json(err);
     });
-})
+});
+
+router.get("/search-by-cat/:id",(request,response)=>{
+    // console.log(request.params);
+    // console.log("hello");
+    productModel.find({category : request.params.id}).populate("category")
+    .then(result=>{
+        // console.log(result);
+        return response.status(200).json(result);
+    }).catch(err=>{
+        return response.status(500).json(err);
+    })
+});
 
 const uploadFile = async(filename)=>{
     storage.bucket(bucketName).upload(filename,{
