@@ -21,9 +21,9 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  Category:{
+  category:{
     type: Schema.Types.ObjectId,
-    ref: "productcategories"
+    ref: "categories"
    },
    keywords : {
      type : String,

@@ -4,9 +4,10 @@ const cors = require("cors");
 const body = require("body-parser");
 app.use(cors());
 const productCategoryRoute = require("./route/Category");
-const mediafileCategoryRoute = require("./route/mediafileCategoryRoute");
+const mediafileCategoryRoute= require("./route/mediafileCategoryRoute");
 const mediafileRouter = require("./route/mediafile");
-const priestController = require("./route/priestCategoryRoute")
+const productRoute = require("./route/productRoute");
+
 const mongoose = require("mongoose");
 mongoose
   .connect(
@@ -21,11 +22,12 @@ mongoose
 app.use(express.static("./public"));
 app.use(body.urlencoded({ extended: true }));
 app.use(body.json());
+
 app.use("/product-category", productCategoryRoute);
 app.use("/mediafile-category", mediafileCategoryRoute);
 app.use("/mediafile", mediafileRouter);
-
+app.use("/product",productRoute);
 app.use("/priest-category",priestController)
 app.listen(3000, () => {
   console.log("Server is running on port " + 3000);
-
+});
