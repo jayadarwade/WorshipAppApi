@@ -36,7 +36,16 @@ exports.update=(request,response)=>{
         $set:{
             name:request.body.name
         }
-    })
+    }).then(result=>{
+      console.log(result);
+    if (result.modifiedCount > 0)
+      return response.status(202).json({ message: "update" });
+    else return response.status(200).json({ message: "not update" });
+  })
+  .catch((err) => {
+    console.log(err);
+    return response.status(500).json({ message: "failed" });
+  });
 }
 
 exports.view=(request,response)=>{
@@ -48,3 +57,4 @@ exports.view=(request,response)=>{
         return response.status(500).json({mesaage:'failed'})
     })
 }
+
