@@ -20,4 +20,4 @@ app.use("/medialfile-category",mediafileCategoryRoute);
 app.use("/mediafile",mediafileRouter)
 app.listen(3000,()=>{
     console.log("Server is running on port " + 3000);
-})
+});
