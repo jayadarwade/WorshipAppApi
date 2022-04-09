@@ -109,16 +109,34 @@ router.post("/edit",upload.single("image"),(request,response)=>{
 });
 
 router.get("/search-by-cat/:id",(request,response)=>{
-    // console.log(request.params);
-    // console.log("hello");
     productModel.find({category : request.params.id}).populate("category")
     .then(result=>{
-        // console.log(result);
         return response.status(200).json(result);
     }).catch(err=>{
         return response.status(500).json(err);
     })
 });
+
+router.post("/search-by-cat-name",(request,response)=>{
+    productModel.find().populate("category")
+    .then(result=>{
+        var flag = false;
+        var data = [];
+        for(product of result){
+            console.log(product);
+            if(product.category.name==request.body.name){
+                flag = true;
+                data.push(product);
+            }
+        }
+        if(flag)
+            return response.status(200).json(data);
+        return response.status(200).json("No data Found");
+    }).catch(err=>{
+        console.log(err);
+        return response.status(500).json({err : "Something went wrong"});
+    });
+})
 
 const uploadFile = async(filename)=>{
     storage.bucket(bucketName).upload(filename,{
