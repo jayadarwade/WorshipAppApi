@@ -9,7 +9,7 @@ const productCategoryRoute = require("./route/Category");
 const mediafileCategoryRoute = require("./route/mediafileCategoryRoute");
 const mediafileRouter = require("./route/mediafile");
 const productRoute = require("./route/productRoute");
-
+const cart = require("./route/cartRoute")
 const priestCategoryRoute = require("./route/priestCategoryRoute");
 const userRoute = require('./route/userRoute.js')
 const adminRoute = require('./route/adminRoute.js')
@@ -32,7 +32,7 @@ app.use(body.json());
 app.use("/product-category", productCategoryRoute);
 app.use("/mediafile-category", mediafileCategoryRoute);
 app.use("/mediafile", mediafileRouter);
-
+app.use("/cart",cart)
 app.use("/product", productRoute);
 app.use("/priest-category", priestCategoryRoute)
 app.use("/user", userRoute)
