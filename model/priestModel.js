@@ -3,40 +3,42 @@ const schema = mongoose.Schema;
 const priestSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     required: true,
-    unique:true
+    unique: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   mobile: {
     type: Number,
-    required: true
+    required: true,
   },
   age: {
     type: Number,
-    required: true
+    required: true,
   },
   isApproved: {
     type: boolean,
-    default : false
+    default: false,
   },
-  image : {
-    type : String,
-    required : true
+  image: {
+    type: String,
+    required: true,
   },
-  priestCategory : [{
-      type : schema.Types.ObjectId,
-      ref : "priestcategories"
-  }],
-  about : {
-    type : String,
-  }
+  priestCategory: [
+    {
+      type: schema.Types.ObjectId,
+      ref: "priestcategories",
+    },
+  ],
+  about: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("priests", priestSchema);
