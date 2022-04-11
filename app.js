@@ -13,6 +13,7 @@ const productRoute = require("./route/productRoute");
 const priestCategoryRoute = require("./route/priestCategoryRoute");
 const userRoute = require('./route/userRoute.js')
 const adminRoute = require('./route/adminRoute.js')
+const priestRoute = require('./route/priestRoute.js')
 
 const mongoose = require("mongoose");
 mongoose
@@ -37,6 +38,8 @@ app.use("/product", productRoute);
 app.use("/priest-category", priestCategoryRoute)
 app.use("/user", userRoute)
 app.use("/admin",adminRoute)
+app.use("/priest",priestRoute)
+
 
 app.listen(3000, () => {
   console.log("Server is running on port " + 3000);
