@@ -1,12 +1,11 @@
 const mediafile = require("../model/mediafileCategoryModel");
 exports.add = (request, response) => {
-  console.log(request.body)
+  console.log(request.body);
   mediafile
     .create({
-      name: request.body.name
+      name: request.body.name,
     })
     .then((result) => {
-    
       console.log(result);
       return response.status(200).json(result);
     })
@@ -31,30 +30,37 @@ exports.delete = (request, response) => {
     });
 };
 
-exports.update=(request,response)=>{
-    mediafile.updateOne({_id:request.params.id},{
-        $set:{
-            name:request.body.name
-        }
-    }).then(result=>{
+exports.update = (request, response) => {
+  mediafile
+    .updateOne(
+      { _id: request.params.id },
+      {
+        $set: {
+          name: request.body.name,
+        },
+      }
+    )
+    .then((result) => {
       console.log(result);
-    if (result.modifiedCount > 0)
-      return response.status(202).json({ message: "update" });
-    else return response.status(200).json({ message: "not update" });
-  })
-  .catch((err) => {
-    console.log(err);
-    return response.status(500).json({ message: "failed" });
-  });
-}
-
-exports.view=(request,response)=>{
-    mediafile.find().then(result=>{
-        console.log(result)
-        return response.status(200).json(result)
-    }).catch(err=>{
-        console.log(err)
-        return response.status(500).json({mesaage:'failed'})
+      if (result.modifiedCount > 0)
+        return response.status(202).json({ message: "update" });
+      else return response.status(200).json({ message: "not update" });
     })
-}
+    .catch((err) => {
+      console.log(err);
+      return response.status(500).json({ message: "failed" });
+    });
+};
 
+exports.view = (request, response) => {
+  mediafile
+    .find()
+    .then((result) => {
+      console.log(result);
+      return response.status(200).json(result);
+    })
+    .catch((err) => {
+      console.log(err);
+      return response.status(500).json({ mesaage: "failed" });
+    });
+};
