@@ -13,5 +13,8 @@ const adminSchema = new mongoose.Schema({
       type: String,
       required: true
     },
+    password_confirmation: {
+      type: String,
+    },
   });
   module.exports = mongoose.model("admins", adminSchema);
