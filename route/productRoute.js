@@ -136,7 +136,16 @@ router.post("/search-by-cat-name",(request,response)=>{
         console.log(err);
         return response.status(500).json({err : "Something went wrong"});
     });
-})
+});
+
+router.post("/filter-by-price",(request,response)=>{
+    productModel.find({price: { $gte: request.body.lowPrice, $lte: request.body.highPrice } })
+    .then(result=>{
+        response.status(200).json(result);
+    }).catch(err=>{
+        response.status(500).json({err:"Something went wrong"});
+    })
+});
 
 const uploadFile = async(filename)=>{
     storage.bucket(bucketName).upload(filename,{
