@@ -5,7 +5,7 @@ exports.add = async (request, response) => {
 
   if (!cart) cart = new Cart({ userId: request.body.userId });
 
-  cart.productList.push(request.body.id);
+  cart.productList.push(request.body.productId);
   cart
     .save()
     .then((results) => {
@@ -19,10 +19,9 @@ exports.add = async (request, response) => {
 };
 
 exports.view = (request, response) => {
-  Cart.find()
-    .populate("products")
-    .then((results) => {
-      return response.status(200).json(results);
+  Cart.find().populate("productList")
+    .then((result) => {
+      return response.status(200).json(result);
     })
     .catch((err) => {
       console.log(err);
@@ -30,9 +29,9 @@ exports.view = (request, response) => {
     });
 };
 
-exports.view = (request, response) => {
+exports.viewone = (request, response) => {
   Cart.findOne({ userId: request.params.id })
-    .populate("products")
+    .populate("productList")
     .then((results) => {
       console.log(results);
       return response.status(200).json(results);

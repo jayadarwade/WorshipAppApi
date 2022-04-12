@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const dotenv = require('dotenv')  
-dotenv.config()
+const dotenv = require("dotenv");
+dotenv.config();
 const cors = require("cors");
 const body = require("body-parser");
 app.use(cors());
@@ -9,12 +9,11 @@ const productCategoryRoute = require("./route/Category");
 const mediafileCategoryRoute = require("./route/mediafileCategoryRoute");
 const mediafileRouter = require("./route/mediafile");
 const productRoute = require("./route/productRoute");
-const cart = require("./route/cartRoute")
+const cart = require("./route/cartRoute");
 const priestCategoryRoute = require("./route/priestCategoryRoute");
-const userRoute = require('./route/userRoute.js')
-const adminRoute = require('./route/adminRoute.js')
-const priestRoute = require('./route/priestRoute.js')
-
+const userRoute = require("./route/userRoute.js");
+const adminRoute = require("./route/adminRoute.js");
+const priestRoute = require("./route/priestRoute.js");
 const mongoose = require("mongoose");
 mongoose
   .connect(
@@ -30,16 +29,16 @@ app.use(express.static("./public"));
 app.use(body.urlencoded({ extended: true }));
 app.use(body.json());
 
+app.use("/user", userRoute);
+app.use("/cart", cart);
+
+app.use("/admin", adminRoute);
 app.use("/product-category", productCategoryRoute);
+app.use("/product", productRoute);
 app.use("/mediafile-category", mediafileCategoryRoute);
 app.use("/mediafile", mediafileRouter);
-app.use("/cart",cart)
-app.use("/product", productRoute);
-app.use("/priest-category", priestCategoryRoute)
-app.use("/user", userRoute)
-app.use("/admin",adminRoute)
-app.use("/priest",priestRoute)
-
+app.use("/priest-category", priestCategoryRoute);
+app.use("/priest", priestRoute);
 
 app.listen(3000, () => {
   console.log("Server is running on port " + 3000);

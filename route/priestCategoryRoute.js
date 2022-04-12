@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require("express");
 const route = express.Router();
-const priestController = require('../controller/priestCategoryController');
+const priestController = require("../controller/priestCategoryController");
 const { Storage } = require("@google-cloud/storage");
 const multer = require("multer");
 
@@ -17,13 +17,12 @@ const storage = new Storage({
 });
 var upload = multer({ storage: storages });
 
+route.post("/add", upload.single("image"), priestController.add);
 
-route.post("/add",upload.single("image"),priestController.add);
+route.get("/view", priestController.view);
 
-route.get("/view",priestController.view);
+route.delete("/delete/:id", priestController.delete);
 
-route.delete("/delete/:id",priestController.delete);
+route.post("/update/:id", upload.single("image"), priestController.update);
 
-route.post("/update/:id",upload.single("image"),priestController.update);
-
-module.exports=route;
+module.exports = route;
