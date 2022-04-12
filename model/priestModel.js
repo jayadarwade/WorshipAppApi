@@ -14,6 +14,10 @@ const priestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  password_confirmation: {
+    type: String,
+  },
+
   mobile: {
     type: Number,
     required: true,
@@ -23,7 +27,7 @@ const priestSchema = new mongoose.Schema({
     required: true,
   },
   isApproved: {
-    type: boolean,
+    type: Boolean,
     default: false,
   },
   image: {
