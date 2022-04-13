@@ -41,7 +41,6 @@ exports.adminRegistration = async (req, res) => {
             name: name,
             email: email,
             password: hashPassword,
-            password_confirmation: hashPassword,
             image: image,
           });
           await doc.save();
@@ -83,7 +82,7 @@ exports.adminLogin = async (req, res) => {
       const user = await adminModel.findOne({ email: email });
       if (user != null) {
         const isMatch = await bcrypt.compare(password, user.password);
-        if (user.email === email && isMatch) {
+        if (isMatch) {
           // Generate JWT Token
           const token = jwt.sign(
             { userID: user._id },

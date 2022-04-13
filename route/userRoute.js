@@ -1,7 +1,6 @@
 const express = require("express");
 const route = express.Router();
 const userController = require("../controller/userController.js");
-const { Storage } = require("@google-cloud/storage");
 const multer = require("multer");
 
 var storages = multer.diskStorage({
@@ -37,6 +36,5 @@ route.post(
 route.get("/view", userController.view);
 
 route.delete("/delete/:id",userController.delete)
-
 
 module.exports = route;

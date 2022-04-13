@@ -23,6 +23,6 @@ route.get("/view", mediafileController.view);
 
 route.delete("/delete/:id", mediafileController.delete);
 
-route.post("/update/:id", upload.single("image"), mediafileController.update);
+route.post("/update", upload.single("image"), mediafileController.update);
 
 module.exports = route;

@@ -8,6 +8,6 @@ route.get('/view',mediafileController.view);
 
 route.delete('/delete/:id',mediafileController.delete);
 
-route.post('/update/:id',mediafileController.update);
+route.post('/update',mediafileController.update);
 
 module.exports=route;
