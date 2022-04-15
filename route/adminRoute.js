@@ -1,7 +1,6 @@
 const express = require("express");
 const route = express.Router();
 const adminController = require("../controller/adminController.js");
-const { Storage } = require("@google-cloud/storage");
 const multer = require("multer");
 
 var storages = multer.diskStorage({
@@ -11,10 +10,6 @@ var storages = multer.diskStorage({
   },
 });
 var upload = multer({ storage: storages });
-const storage = new Storage({
-  projectId: "worship-first",
-  keyFilename: "worship-first-firebase-adminsdk-vcyhq-642e473ed6.json",
-});
 
 route.post(
   "/admin_register",

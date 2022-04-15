@@ -29,22 +29,7 @@ exports.priestRegistration = async (req, res) => {
   // console.log(req.body);
   let evalData = eval(req.body.categoryid);
   console.log(evalData);
-  const { name, email, password, password_confirmation, mobile, age, about } =
-    req.body;
-  console.log(
-    name +
-      " " +
-      email +
-      " " +
-      password +
-      " " +
-      password_confirmation +
-      " " +
-      mobile +
-      " " +
-      age +
-      " "
-  );
+  const { name, email, password, password_confirmation, mobile, age, about } = req.body;
   const image =
     "https://firebasestorage.googleapis.com/v0/b/worship-first.appspot.com/o/" +
     req.file.filename +
@@ -75,7 +60,6 @@ exports.priestRegistration = async (req, res) => {
             name: name,
             email: email,
             password: hashPassword,
-            password_confirmation: hashPassword,
             mobile: mobile,
             age: age,
             image: image,
@@ -122,7 +106,7 @@ exports.priestLogin = async (req, res) => {
       const user = await priestModel.findOne({ email: email });
       if (user != null) {
         const isMatch = await bcrypt.compare(password, user.password);
-        if (user.email === email && isMatch) {
+        if (isMatch) {
           // Generate JWT Token
           const token = jwt.sign(
             { userID: user._id },
@@ -143,7 +127,7 @@ exports.priestLogin = async (req, res) => {
       } else {
         res.send({
           status: "failed",
-          message: "You are not a Registered User",
+          message: "You are not a Registered Priest",
         });
       }
     } else {

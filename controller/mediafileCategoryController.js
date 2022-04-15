@@ -33,7 +33,7 @@ exports.delete = (request, response) => {
 exports.update = (request, response) => {
   mediafile
     .updateOne(
-      { _id: request.params.id },
+      { _id: request.body.id },
       {
         $set: {
           name: request.body.name,

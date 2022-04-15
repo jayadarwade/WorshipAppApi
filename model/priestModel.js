@@ -14,9 +14,6 @@ const priestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  password_confirmation: {
-    type: String,
-  },
 
   mobile: {
     type: Number,

@@ -52,9 +52,10 @@ exports.update = (request, response) => {
   }
   priest
     .updateOne(
-      { _id: request.params.id },
+      { _id: request.body.id },
       {
         name: request.body.name,
+        image : image
       }
     )
     .then((result) => {

@@ -13,9 +13,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  password_confirmation: {
-    type: String,
-  },
   image: {
     type: String,
     required: true,

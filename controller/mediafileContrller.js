@@ -82,7 +82,7 @@ exports.update = (request, response) => {
   }
   mediafile
     .updateOne(
-      { _id: request.params.id },
+      { _id: request.body.id },
       {
         type: request.body.type,
         link: request.body.link,
