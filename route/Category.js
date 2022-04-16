@@ -117,4 +117,16 @@ router.post("/edit", upload.single("image"), (request, response) => {
       return response.status(500).json(err);
     });
 });
+
+router.post("/view-product-category", (request, response) => {
+  productCategoryModel
+    .find({type: request.body.type})
+    .then((result) => {
+      return response.status(200).json(result);
+    })
+    .catch((err) => {
+      return response.status(500).json(err);
+    });
+});
+
 module.exports = router;
