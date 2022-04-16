@@ -72,7 +72,7 @@ exports.userRegistration = async (req, res) => {
           status: "success",
           message: "Registration Success",
           token: token,
-          result : saved_user
+          result: saved_user
         });
       } catch (error) {
         console.log(error);
@@ -261,44 +261,52 @@ exports.delete = (req, res) => {
     });
 };
 
-exports.loginByOtp = (request,response)=>{
-  userModel.findOne({_id : request.body.id,otp : request.body.otp})
-  .then(result=>{
+exports.loginByOtp = (request, response) => {
+  userModel.findOne({ _id: request.body.id, otp: request.body.otp })
+    .then(result => {
       return response.status(200).json(result);
-  }).catch(err=>{
+    }).catch(err => {
       return response.status(500).json(err);
-  });
+    });
 }
 
-exports.resendOtp = (request,response)=>{
+exports.resendOtp = (request, response) => {
   let otp = Math.floor(Math.random() * 10000);
-      if(otp<1000){
-          otp = "0" + otp; 
-      }
-  userModel.findByIdAndUpdate({_id : request.body.id},{$set : {otp : otp}})
-  .then(result=>{
+  if (otp < 1000) {
+    otp = "0" + otp;
+  }
+  userModel.findByIdAndUpdate({ _id: request.body.id }, { $set: { otp: otp } })
+    .then(result => {
       var option = {
-          authorization: 'fFdBgoans3ZJAbPGieMQT8hj1qNXKSDC65zxWEwl2rOpY7Hmvy3oVxeTkulNpsgRvrJWXOIMhGmdE7ni',
-          message: "Your OTP for registration in WorshipFirst is " +otp 
-          , numbers: [result.mobile]
+        authorization: 'fFdBgoans3ZJAbPGieMQT8hj1qNXKSDC65zxWEwl2rOpY7Hmvy3oVxeTkulNpsgRvrJWXOIMhGmdE7ni',
+        message: "Your OTP for registration in WorshipFirst is " + otp
+        , numbers: [result.mobile]
       }
-      fastsms.sendMessage(option).then((response,err) => {
-          console.log(response);
+      fastsms.sendMessage(option).then((response, err) => {
+        console.log(response);
       });
-      response.status(200).json({message : "Message sent successfully"});
-  })
-  .catch(err=>{
+      response.status(200).json({ message: "Message sent successfully" });
+    })
+    .catch(err => {
       console.log(err);
-      return response.status(500).json({message:"Something went wrong"});
-  })
+      return response.status(500).json({ message: "Something went wrong" });
+    })
 }
 
-exports.socialLogin = (request,response)=>{
-  userModel.create({name : request.body.name,email : request.body.email})
-  .then(result=>{
-      return response.status(200).json(result);
-  }).catch(err=>{
-      console.log(err);
-      return response.status(500).json(err);
-  });
+exports.socialLogin = async (request, response) => {
+  const user = await userModel.findOne({ email: request.body.email });
+  if (user) {
+    console.log("hello");
+    return response.status(200).json(user);
+  }
+  else {
+    userModel.create({ name: request.body.name, email: request.body.email, image: request.body.image })
+      .then(result => {
+        console.log("bye");
+        return response.status(200).json(result);
+      }).catch(err => {
+        console.log(err);
+        return response.status(500).json(err);
+      });
+  }
 }
