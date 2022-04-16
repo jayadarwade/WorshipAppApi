@@ -18,6 +18,8 @@ route.post(
   userController.userRegistration
 );
 
+route.post("/login-by-otp",userController.loginByOtp);
+
 route.post("/login", userController.userLogin);
 
 route.post(
@@ -35,6 +37,10 @@ route.post(
 
 route.get("/view", userController.view);
 
-route.delete("/delete/:id",userController.delete)
+route.delete("/delete/:id",userController.delete);
+
+route.post("/resend-otp",userController.resendOtp);
+
+route.post("/login-by-social-media",userController.socialLogin);
 
 module.exports = route;

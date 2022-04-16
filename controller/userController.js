@@ -5,6 +5,8 @@ const transporter = require("../configuration/emailConfig");
 const path = require("path");
 const { Storage } = require("@google-cloud/storage");
 const requests = require("request");
+const fastsms = require("fast-two-sms");
+
 
 const storage = new Storage({
   projectId: "worship-first",
@@ -28,47 +30,63 @@ exports.userRegistration = async (req, res) => {
     "https://firebasestorage.googleapis.com/v0/b/worship-first.appspot.com/o/" +
     req.file.filename +
     "?alt=media&token=hello";
-    if (name && email && password && password_confirmation && mobile && image) {
-      if (password === password_confirmation) {
-        try {
-          const salt = await bcrypt.genSalt(10);
-          const hashPassword = await bcrypt.hash(password, salt);
-          const doc = new userModel({
-            name: name,
-            email: email,
-            password: hashPassword,
-            mobile: mobile,
-            image: image,
-          });
-          await doc.save();
-          uploadFile(
-            path.join(__dirname, "../", "public/images/") + req.file.filename
-          );
-          const saved_user = await userModel.findOne({ email: email });
-          // Generate JWT Token
-          const token = jwt.sign(
-            { userID: saved_user._id },
-            process.env.JWT_SECRET_KEY,
-            { expiresIn: "5d" }
-          );
-          res.status(201).send({
-            status: "success",
-            message: "Registration Success",
-            token: token,
-          });
-        } catch (error) {
-          console.log(error);
-          res.send({ status: "failed", message: "Unable to Register" });
+  if (name && email && password && password_confirmation && mobile && image) {
+    if (password === password_confirmation) {
+      try {
+        let otp = Math.floor(Math.random() * 10000);
+        if (otp < 1000) {
+          otp = "0" + otp;
         }
-      } else {
-        res.send({
-          status: "failed",
-          message: "Password and Confirm Password doesn't match",
+        req.body.otp = otp;
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(password, salt);
+        const doc = new userModel({
+          name: name,
+          email: email,
+          password: hashPassword,
+          mobile: mobile,
+          image: image,
+          otp: otp
         });
+        await doc.save();
+
+        var option = {
+          authorization: 'fFdBgoans3ZJAbPGieMQT8hj1qNXKSDC65zxWEwl2rOpY7Hmvy3oVxeTkulNpsgRvrJWXOIMhGmdE7ni',
+          message: "Your OTP for registration in WorshipFirst is " + otp
+          , numbers: [mobile]
+        }
+        fastsms.sendMessage(option).then((response) => {
+          console.log(response);
+        });
+        uploadFile(
+          path.join(__dirname, "../", "public/images/") + req.file.filename
+        );
+        const saved_user = await userModel.findOne({ email: email });
+        // Generate JWT Token
+        const token = jwt.sign(
+          { userID: saved_user._id },
+          process.env.JWT_SECRET_KEY,
+          { expiresIn: "5d" }
+        );
+        res.status(201).send({
+          status: "success",
+          message: "Registration Success",
+          token: token,
+          result : saved_user
+        });
+      } catch (error) {
+        console.log(error);
+        res.send({ status: "failed", message: "Unable to Register" });
       }
     } else {
-      res.send({ status: "failed", message: "All fields are required" });
+      res.send({
+        status: "failed",
+        message: "Password and Confirm Password doesn't match",
+      });
     }
+  } else {
+    res.send({ status: "failed", message: "All fields are required" });
+  }
 };
 
 exports.userLogin = async (req, res) => {
@@ -242,3 +260,45 @@ exports.delete = (req, res) => {
       return res.status(500).json({ message: "filed" });
     });
 };
+
+exports.loginByOtp = (request,response)=>{
+  userModel.findOne({_id : request.body.id,otp : request.body.otp})
+  .then(result=>{
+      return response.status(200).json(result);
+  }).catch(err=>{
+      return response.status(500).json(err);
+  });
+}
+
+exports.resendOtp = (request,response)=>{
+  let otp = Math.floor(Math.random() * 10000);
+      if(otp<1000){
+          otp = "0" + otp; 
+      }
+  userModel.findByIdAndUpdate({_id : request.body.id},{$set : {otp : otp}})
+  .then(result=>{
+      var option = {
+          authorization: 'fFdBgoans3ZJAbPGieMQT8hj1qNXKSDC65zxWEwl2rOpY7Hmvy3oVxeTkulNpsgRvrJWXOIMhGmdE7ni',
+          message: "Your OTP for registration in WorshipFirst is " +otp 
+          , numbers: [result.mobile]
+      }
+      fastsms.sendMessage(option).then((response,err) => {
+          console.log(response);
+      });
+      response.status(200).json({message : "Message sent successfully"});
+  })
+  .catch(err=>{
+      console.log(err);
+      return response.status(500).json({message:"Something went wrong"});
+  })
+}
+
+exports.socialLogin = (request,response)=>{
+  userModel.create({name : request.body.name,email : request.body.email})
+  .then(result=>{
+      return response.status(200).json(result);
+  }).catch(err=>{
+      console.log(err);
+      return response.status(500).json(err);
+  });
+}
