@@ -2,6 +2,7 @@ const express = require("express");
 const route = express.Router();
 const userController = require("../controller/userController.js");
 const multer = require("multer");
+const { Router } = require("express");
 
 var storages = multer.diskStorage({
   destination: "public/images",
