@@ -42,6 +42,6 @@ route.delete("/delete/:id",userController.delete);
 
 route.post("/resend-otp",userController.resendOtp);
 
-route.post("/login-by-social-media",userController.socialLogin);
+// route.post("/login-by-social-media",userController.socialLogin);
 
 module.exports = route;
