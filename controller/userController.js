@@ -296,7 +296,7 @@ exports.resendOtp = (request, response) => {
 exports.socialLogin = async (request, response) => {
   const user = await userModel.findOne({ email: request.body.email });
   if (user) {
-    console.log("hello");
+    // console.log("hello");
     return response.status(200).json(user);
   }
   else {

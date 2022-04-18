@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   mobile: {
     type: String,
-    unique: true,
+    // unique: true,
   },
   otp : {
     type : String,
