@@ -112,3 +112,12 @@ const uploadFile = async (filename) => {
     },
   });
 };
+
+exports.viewByType = (request,response) =>{
+  mediafile.find({type:request.params.type})
+  .then(result=>{
+    return response.status(200).json(result);
+  }).catch(err=>{
+    return response.status(500).json({message:"Something went wrong"});
+  })
+}

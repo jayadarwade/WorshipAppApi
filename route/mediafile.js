@@ -3,6 +3,7 @@ const route = express.Router();
 const { Storage } = require("@google-cloud/storage");
 const multer = require("multer");
 const mediafileController = require("../controller/mediafileContrller");
+const router = require("./Category");
 
 var storages = multer.diskStorage({
   destination: "public/images",
@@ -24,5 +25,7 @@ route.get("/view", mediafileController.view);
 route.delete("/delete/:id", mediafileController.delete);
 
 route.post("/update", upload.single("image"), mediafileController.update);
+
+route.get("/view-by-type/:type",mediafileController.viewByType);
 
 module.exports = route;
