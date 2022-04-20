@@ -5,6 +5,7 @@ const multer = require("multer");
 const productCategoryModel = require("../model/CategoryModel");
 const path = require("path");
 const requests = require("request");
+const { response } = require("express");
 
 var storages = multer.diskStorage({
   destination: "public/images",
@@ -82,6 +83,7 @@ const uploadFile = async (filename) => {
 
 router.post("/edit", upload.single("image"), (request, response) => {
   let image;
+  console.log(request.body);
   if (request.file) {
     image =
       "https://firebasestorage.googleapis.com/v0/b/worship-first.appspot.com/o/" +
@@ -120,7 +122,7 @@ router.post("/edit", upload.single("image"), (request, response) => {
 
 router.post("/view-product-category", (request, response) => {
   productCategoryModel
-    .find({type: request.body.type})
+    .find({ type: request.body.type })
     .then((result) => {
       return response.status(200).json(result);
     })
