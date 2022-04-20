@@ -1,9 +1,7 @@
 const express = require("express");
 const route = express.Router();
-const { Storage } = require("@google-cloud/storage");
 const multer = require("multer");
 const mediafileController = require("../controller/mediafileContrller");
-const router = require("./Category");
 
 var storages = multer.diskStorage({
   destination: "public/images",
@@ -12,15 +10,14 @@ var storages = multer.diskStorage({
   },
 });
 var upload = multer({ storage: storages });
-const storage = new Storage({
-  projectId: "worship-first",
-  keyFilename: "worship-first-firebase-adminsdk-vcyhq-642e473ed6.json",
-});
+
 var upload = multer({ storage: storages });
 
 route.post("/add", upload.single("image"), mediafileController.add);
 
 route.get("/view", mediafileController.view);
+
+route.get("/view-by-cat/:id",mediafileController.viewByCat);
 
 route.delete("/delete/:id", mediafileController.delete);
 

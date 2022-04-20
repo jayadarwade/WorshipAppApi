@@ -121,3 +121,12 @@ exports.viewByType = (request,response) =>{
     return response.status(500).json({message:"Something went wrong"});
   })
 }
+
+exports.viewByCat = (request,response)=>{
+  mediafile.find({categoryid:request.params.id})
+  .then(result=>{
+    return response.status(200).json(result);
+  }).catch(err=>{
+    return response.status(500).json({message:"Something went wrong"});
+  })
+}
