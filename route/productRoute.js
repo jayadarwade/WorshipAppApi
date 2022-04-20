@@ -156,6 +156,19 @@ router.post("/filter-by-price",(request,response)=>{
     })
 });
 
+router.post("/view-categoryid", (request, response) => {
+    productModel
+      .find({ category: request.body.catid })
+      .then((result) => {
+        console.log(result)
+        return response.status(200).json(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        return response.status(500).json(err);
+      });
+  });
+
 const uploadFile = async(filename)=>{
     storage.bucket(bucketName).upload(filename,{
         gzip:true,
