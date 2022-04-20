@@ -298,14 +298,22 @@ exports.resendOtp = (request, response) => {
 exports.socialLogin = async (request, response) => {
   const user = await userModel.findOne({ email: request.body.email });
   if (user) {
-    // console.log("hello");
-    return response.status(200).json(user);
+    const token = jwt.sign(
+      { userID: user._id },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: "5d" }
+    );
+    return response.status(200).json({user:user,token:token});
   }
   else {
     userModel.create({ name: request.body.name, email: request.body.email, image: request.body.image })
       .then(result => {
-        console.log("bye");
-        return response.status(200).json(result);
+        const token = jwt.sign(
+          { userID: result._id },
+          process.env.JWT_SECRET_KEY,
+          { expiresIn: "5d" }
+        );
+        return response.status(200).json({user:result,token:token});
       }).catch(err => {
         console.log(err);
         return response.status(500).json(err);
