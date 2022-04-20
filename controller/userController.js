@@ -90,6 +90,7 @@ exports.userRegistration = async (req, res) => {
 };
 
 exports.userLogin = async (req, res) => {
+  console.log("jhdfg");
   try {
     const { email, password } = req.body;
     if (email && password) {
@@ -107,6 +108,7 @@ exports.userLogin = async (req, res) => {
             status: "success",
             message: "Login Success",
             token: token,
+            result : user
           });
         } else {
           res.send({
