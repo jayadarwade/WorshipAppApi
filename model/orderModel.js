@@ -18,22 +18,6 @@ const orderSchema = new mongoose.Schema({
             }
         }
     ],
-    packageList: [
-        {
-            package: {
-                type: schema.Types.ObjectId,
-                ref: "packages",
-            },
-            totalPrice: {
-                type: Number,
-                required: true
-            },
-            qty: {
-                type: Number,
-                required: true
-            }
-        }
-    ],
     date : {
         type : Date,
         default : Date.now
@@ -45,7 +29,8 @@ const orderSchema = new mongoose.Schema({
     address : {
         type : String,
         required : true
-    }
+    },
+    amount:Number
 });
     
 module.exports = mongoose.model("orders", orderSchema);

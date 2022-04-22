@@ -14,6 +14,7 @@ const priestCategoryRoute = require("./route/priestCategoryRoute");
 const userRoute = require("./route/userRoute.js");
 const adminRoute = require("./route/adminRoute.js");
 const priestRoute = require("./route/priestRoute.js");
+const orderRoute = require("./route/orderRoute");
 const mongoose = require("mongoose");
 mongoose
   .connect(
@@ -31,6 +32,7 @@ app.use(body.json());
 
 app.use("/user", userRoute);
 app.use("/cart", cart);
+app.use("/order",orderRoute);
 
 app.use("/admin", adminRoute);
 app.use("/product-category", productCategoryRoute);
