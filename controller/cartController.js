@@ -60,7 +60,7 @@ exports.deletecart = (request, response) => {
 
 exports.deleteOneProduct = (request, response) => {
   Cart.updateOne(
-    { _id: request.params.id },
+    {userId: request.params.id },
     {
       $pullAll: {
         productList: [

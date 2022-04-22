@@ -10,6 +10,6 @@ route.get("/view/:id", cartController.viewone);
 
 route.delete("/delete/:id", cartController.deletecart);
 
-route.post("/delete/:id/:productid", cartController.deleteOneProduct);
+route.delete("/delete/:id/:productid", cartController.deleteOneProduct);
 
 module.exports = route;
