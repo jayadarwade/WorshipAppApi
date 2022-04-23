@@ -43,7 +43,7 @@ exports.viewone = (request, response) => {
 };
 
 exports.deletecart = (request, response) => {
-  Cart.deleteOne({ _id: request.params.id })
+  Cart.deleteOne({ userId: request.params.id })
     .then((result) => {
       console.log(result);
       if (result.deletedCount)
