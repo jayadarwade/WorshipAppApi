@@ -8,4 +8,5 @@ router.post("/create",orderController.create);
 
 router.post("/order-status",orderController.orderStatus);
 
+router.get("/view",orderController.view);
 module.exports = router;

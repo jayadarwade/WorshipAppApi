@@ -1,5 +1,6 @@
 const orderModel = require("../model/orderModel");
 const Razorpay = require("razorpay");
+const request = require("request");
 var instance = new Razorpay({ key_id: 'rzp_test_NPr7p2g2REFz6n', key_secret: '5IUWlT8W8DcE7AKSVYCDvV7O' })
 
 exports.place = (request,response)=>{
@@ -56,6 +57,14 @@ exports.orderStatus = (request,response)=>{
     })
 }
 
+exports.view = (request,response) =>{
+    orderModel.find().populate("productList.product")
+    .then(result=>{
+        return response.status(200).json(result);
+    }).catch(err=>{
+        return response.status(500).json(err);
+    })
+}
 
 
 
