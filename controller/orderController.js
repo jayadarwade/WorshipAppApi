@@ -66,6 +66,13 @@ exports.view = (request,response) =>{
     })
 }
 
-
-
-
+exports.viewOne = (request,response)=>{
+    orderModel.find({userId:request.params.userId})
+    .populate("productList.product")
+    .then(result=>{
+        return response.status(200).json(result);
+    })
+    .catch(err=>{
+        return response.status(500).json(err);
+    })
+}
