@@ -169,6 +169,19 @@ router.post("/view-categoryid", (request, response) => {
       });
   });
 
+  router.post("/view-product-productId", (request, response) => {
+    productModel
+      .findOne({ _id: request.body.id })
+      .then((result) => {
+          console.log(result)
+        return response.status(200).json(result);
+      })
+      .catch((err) => {
+        return response.status(500).json(err);
+      });
+  });
+  
+
 const uploadFile = async(filename)=>{
     storage.bucket(bucketName).upload(filename,{
         gzip:true,
