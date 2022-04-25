@@ -131,4 +131,15 @@ router.post("/view-product-category", (request, response) => {
     });
 });
 
+router.post("/view-product-categoryId", (request, response) => {
+  productCategoryModel
+    .findOne({ _id: request.body.id })
+    .then((result) => {
+      return response.status(200).json(result);
+    })
+    .catch((err) => {
+      return response.status(500).json(err);
+    });
+});
+
 module.exports = router;
