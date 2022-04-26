@@ -105,12 +105,13 @@ router.post("/edit", upload.single("image"), (request, response) => {
   }
   productCategoryModel
     .updateOne(
-      { _id: request.body.id },
-      {
+      { _id: request.body.id },{
+        $set:{
         name: request.body.name,
         image: image,
         type: request.body.type,
       }
+    }
     )
     .then((result) => {
       return response.status(200).json(result);
